@@ -8,22 +8,38 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.todoapp.ui.theme.TodoAppTheme
+import com.example.todoapp.viewModels.MemoViewModel
 import com.example.todoapp.views.HomePage
+import com.example.todoapp.views.NewMemo
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             TodoAppTheme {
+                val vm by remember {
+                    mutableStateOf(MemoViewModel())
+                }
                 val navController = rememberNavController()
                 NavHost(navController = navController, startDestination = Route.Home.route){
-
+                    composable(route=Route.Home.route){
+                        MainScreen("My memo", navController, vm)
+                    }
+                    composable(route = Route.Add.route){
+                        NewMemo(navController, vm)
+                    }
                 }
             }
         }
@@ -31,7 +47,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MainScreen(name: String) {
+fun MainScreen(name: String,nav: NavController, viewModel: MemoViewModel) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -40,7 +56,7 @@ fun MainScreen(name: String) {
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { /*TODO*/ },
+                onClick = { nav.navigate(route = Route.Add.route) },
                 contentColor = Color.White,
                 backgroundColor = MaterialTheme.colors.primary
             ) {
@@ -49,7 +65,7 @@ fun MainScreen(name: String) {
         },
         floatingActionButtonPosition = FabPosition.End,
     ) {
-        HomePage()
+        HomePage(viewModel)
     }
 }
 
@@ -57,6 +73,7 @@ fun MainScreen(name: String) {
 @Composable
 fun DefaultPreview() {
     TodoAppTheme {
-        MainScreen(name = "My memo")
+        val navController = rememberNavController()
+        MainScreen(name = "My memo",navController,MemoViewModel())
     }
 }

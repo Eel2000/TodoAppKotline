@@ -26,10 +26,8 @@ import androidx.compose.ui.unit.sp
 import com.example.todoapp.viewModels.MemoViewModel
 
 @Composable
-fun HomePage(){
-    val vm by remember {
-        mutableStateOf(MemoViewModel())
-    }
+fun HomePage(vm: MemoViewModel){
+
     Surface(modifier = Modifier.fillMaxSize(),
     color = MaterialTheme.colors.background) {
         Column(
