@@ -11,6 +11,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.rememberNavController
 import com.example.todoapp.ui.theme.TodoAppTheme
 import com.example.todoapp.views.HomePage
 
@@ -19,8 +21,10 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             TodoAppTheme {
-                // A surface container using the 'background' color from the theme
-               MainScreen(name ="My memo" )
+                val navController = rememberNavController()
+                NavHost(navController = navController, startDestination = Route.Home.route){
+
+                }
             }
         }
     }
