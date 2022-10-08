@@ -1,15 +1,15 @@
 package com.example.todoapp.views
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.AbsoluteCutCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -24,6 +24,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.todoapp.viewModels.MemoViewModel
+import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
+import java.util.Date
 
 @Composable
 fun HomePage(vm: MemoViewModel){
@@ -37,11 +39,51 @@ fun HomePage(vm: MemoViewModel){
         ) {
             LazyColumn(modifier = Modifier.fillMaxHeight()){
                 items(vm.memories){
-                    Column {
-                        Text(text = it.title, fontWeight = FontWeight(500))
-                        Text(text = "${it.date}", textAlign = TextAlign.End)
-                    }
+                   CardMemo(title = it.title, it.date)
                 }
+            }
+        }
+    }
+}
+
+@Composable
+fun CardMemo(title: String,date: Date){
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(10.dp)
+            .clickable { },
+        elevation = 10.dp,
+        shape = AbsoluteCutCornerShape(
+            0,
+            20,
+            0,
+            0
+        ),
+    ) {
+        Row(
+            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Column(modifier = Modifier.padding(15.dp), horizontalAlignment = Alignment.Start) {
+                Text(
+                    text = title,
+                    fontStyle = FontStyle.Normal,
+                    fontWeight = FontWeight.Bold
+                )
+
+                Text(
+                    text = "$date",
+                    textAlign = TextAlign.Right,
+                    fontWeight = FontWeight.Light
+                )
+            }
+
+            IconButton(
+                modifier = Modifier.align(Alignment.Top),
+                onClick = { /*TODO*/ }
+            ) {
+                Icon(imageVector = Icons.Filled.Close, contentDescription = null)
             }
         }
     }

@@ -22,7 +22,7 @@ import java.util.*
 
 @Composable
 fun NewMemo(navController: NavController, vm :MemoViewModel){
-
+val scaffoldState: ScaffoldState = rememberScaffoldState()
     var title by remember {
         mutableStateOf("")
     }
@@ -30,6 +30,7 @@ fun NewMemo(navController: NavController, vm :MemoViewModel){
         mutableStateOf("")
     }
     Scaffold(
+        scaffoldState=scaffoldState,
         topBar = {
             TopAppBar(
                 title ={ Text(text = "new memo")},
@@ -46,7 +47,10 @@ fun NewMemo(navController: NavController, vm :MemoViewModel){
                     FloatingActionButton(
                         modifier = Modifier.paddingFromBaseline(0.dp,5.dp),
                         onClick = {
-                                  vm.addMemo(Memo(UUID.randomUUID(), title,content, date = Date()))
+                            vm.addMemo(Memo(UUID.randomUUID(), title,content, date = Date()))
+                            title="";
+                            content=""
+
                         },
                         contentColor = Color.White,
                         backgroundColor = MaterialTheme.colors.primary
@@ -58,7 +62,6 @@ fun NewMemo(navController: NavController, vm :MemoViewModel){
 
                     FloatingActionButton(
                         onClick = {
-                            vm.addMemo(Memo(UUID.randomUUID(), title,content, date = Date()))
                             title="";
                             content=""
                         },
