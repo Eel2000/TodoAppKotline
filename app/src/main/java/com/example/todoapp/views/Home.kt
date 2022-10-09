@@ -1,5 +1,6 @@
 package com.example.todoapp.views
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -18,6 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -50,6 +52,7 @@ fun HomePage(vm: MemoViewModel){
 
 @Composable
 fun CardMemo(memo: Memo, vm: MemoViewModel){
+    val context = LocalContext.current
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -87,7 +90,10 @@ fun CardMemo(memo: Memo, vm: MemoViewModel){
                        modifier = Modifier.padding(0.dp,12.dp,5.dp,0.dp)
                    )
                        IconButton(
-                           onClick = { vm.removeMemo(memo) },
+                           onClick = {
+                               vm.removeMemo(memo)
+                               Toast.makeText(context,"Memo deleted successfully",Toast.LENGTH_SHORT).show()
+                             },
                        ) {
                            Icon(imageVector = Icons.Filled.Delete, contentDescription = null)
                        }

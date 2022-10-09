@@ -1,5 +1,6 @@
 package com.example.todoapp.views
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -12,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.VerticalAlignmentLine
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -23,6 +25,7 @@ import java.util.*
 
 @Composable
 fun NewMemo(navController: NavController, vm :MemoViewModel){
+    val context = LocalContext.current
 val scaffoldState: ScaffoldState = rememberScaffoldState()
     var title by remember {
         mutableStateOf("")
@@ -51,7 +54,7 @@ val scaffoldState: ScaffoldState = rememberScaffoldState()
                             vm.addMemo(Memo(UUID.randomUUID().toString(), title,content, date = Date()))
                             title="";
                             content=""
-
+                            Toast.makeText(context,"New memo added",Toast.LENGTH_LONG).show()
                         },
                         contentColor = Color.White,
                         backgroundColor = MaterialTheme.colors.primary
