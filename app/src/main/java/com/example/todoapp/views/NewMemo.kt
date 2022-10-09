@@ -15,6 +15,7 @@ import androidx.compose.ui.layout.VerticalAlignmentLine
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.todoapp.models.Memo
 import com.example.todoapp.viewModels.MemoViewModel
@@ -47,7 +48,7 @@ val scaffoldState: ScaffoldState = rememberScaffoldState()
                     FloatingActionButton(
                         modifier = Modifier.paddingFromBaseline(0.dp,5.dp),
                         onClick = {
-                            vm.addMemo(Memo(UUID.randomUUID(), title,content, date = Date()))
+                            vm.addMemo(Memo(UUID.randomUUID().toString(), title,content, date = Date()))
                             title="";
                             content=""
 
@@ -83,17 +84,18 @@ val scaffoldState: ScaffoldState = rememberScaffoldState()
             TextField(
                 value = title,
                 onValueChange = { title = it},
-                label = { Text(text = "tile")},
-                textStyle = TextStyle(Color.Black, fontWeight = FontWeight.ExtraBold)
+                label = { Text(text = "tile", fontSize = 20.sp)},
+                textStyle = TextStyle(Color.Black, fontWeight = FontWeight.ExtraBold, fontSize = 20.sp),
+                modifier = Modifier.fillMaxWidth().height(60.dp)
             )
 
             TextField(
                 value = content,
-                label={ Text(text = "Description")},
+                label={ Text(text = "Description", fontSize = 20.sp)},
                 onValueChange = { content = it },
                 maxLines = 120,
-                modifier = Modifier.padding(20.dp),
-                textStyle = TextStyle(color = Color.Black, fontWeight = FontWeight.Light)
+                modifier = Modifier.fillMaxSize(),
+                textStyle = TextStyle(color = Color.Black, fontWeight = FontWeight.Light, fontSize = 20.sp)
             )
         }
     }
